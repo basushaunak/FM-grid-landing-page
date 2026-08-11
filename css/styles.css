@@ -23,7 +23,7 @@
   --font-size-paragraph: 17px;
   --font-size-other: 14px;
   /* overlay menu opacity  */
-  --menu-opacity: 25%;
+  --menu-background-color: rgba(0, 0, 0, 25%);
 }
 /* Remove all margins and pading from all elements and change the box sizing so that elements' dimensions are not dependent on padding or margin */
 *,
@@ -53,7 +53,27 @@ body {
   border: none;
   cursor: pointer;
   color: var(--white);
-  /* align-self: flex-end; */
+  anchor-name: --menu;
+}
+body:has(#menu:focus) #menu-items,
+#menu-items:focus-within {
+  display: block;
+}
+#menu-items {
+  display: none;
+  padding: 1em;
+  list-style: none;
+  position: absolute;
+  position-anchor: --menu;
+  position-area: bottom span-left;
+  background-color: var(--menu-background-color);
+}
+#menu-items li {
+  text-decoration: none;
+  cursor: pointer;
+}
+#menu-items li:hover {
+  text-decoration: underline;
 }
 main {
   display: grid;
@@ -66,7 +86,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  max-width: 350px;
+  width: 350px;
   aspect-ratio: 1;
   padding-inline: 2rem;
   border: 0.5px solid var(--border-color);
@@ -97,6 +117,34 @@ main {
 .stat-description {
   grid-area: desc;
   display: grid;
-  align-items: end;
+  align-self: flex-end;
   padding: 2em;
+}
+
+@media screen and (min-width: 376px) {
+  main {
+    display: grid;
+    grid-template-columns: repeat(4, 350px);
+    grid-template-rows: repate(4, 350px);
+    grid-template-areas:
+      "hero hero card1 card2"
+      "hero hero card3 card4";
+  }
+  main .hero {
+    grid-area: hero;
+    height: 100%;
+    width: 100%;
+  }
+  main .stats:nth-child(1) {
+    grid-area: card1;
+  }
+  main .stats:nth-child(2) {
+    grid-area: card2;
+  }
+  main .stats:nth-child(3) {
+    grid-area: card3;
+  }
+  main .stats:nth-child(4) {
+    grid-area: card4;
+  }
 }
