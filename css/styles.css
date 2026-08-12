@@ -22,6 +22,7 @@
   --font-family: "Inter", sans-serif;
   --font-size-paragraph: 17px;
   --font-size-other: 14px;
+  --menu-font-size: 2rem;
   /* overlay menu opacity  */
   --menu-background-color: rgba(0, 0, 0, 25%);
 }
@@ -41,24 +42,54 @@ body {
   width: 100vw;
   min-height: 100vh;
 }
+
+.wrapper {
+  width: fit-content;
+  margin-inline: auto;
+}
+
 .navigation-bar {
   display: flex;
   justify-content: space-between;
   height: 3em;
   align-items: center;
-  padding-inline: 2em;
 }
+
 #menu {
-  background: none;
-  border: none;
+  display: none;
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  width: 20px;
   cursor: pointer;
-  color: var(--white);
+  gap: 2px;
   anchor-name: --menu;
 }
-body:has(#menu:focus) #menu-items,
-#menu-items:focus-within {
-  display: block;
+
+.menu-icon span {
+  height: 1px;
+  background-color: var(--white);
+  transition: 0.3s;
 }
+
+#menu:checked ~ .menu-icon span:nth-child(1) {
+  transform: translateY(3px) rotate(45deg);
+}
+#menu:checked ~ .menu-icon span:nth-child(2) {
+  opacity: 0;
+}
+#menu:checked ~ .menu-icon span:nth-child(3) {
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+#menu:checked ~ nav #menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 #menu-items {
   display: none;
   padding: 1em;
@@ -66,15 +97,18 @@ body:has(#menu:focus) #menu-items,
   position: absolute;
   position-anchor: --menu;
   position-area: bottom span-left;
+  inset-block-start: 1rem;
   background-color: var(--menu-background-color);
 }
 #menu-items li {
   text-decoration: none;
   cursor: pointer;
+  font-size: var(--menu-font-size);
 }
 #menu-items li:hover {
   text-decoration: underline;
 }
+
 main {
   display: grid;
   grid-template-columns: 1fr;
@@ -147,4 +181,14 @@ main {
   main .stats:nth-child(4) {
     grid-area: card4;
   }
+}
+footer {
+  font-size: var(--font-size-other);
+  height: 3em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.attribution {
+  text-align: center;
 }
